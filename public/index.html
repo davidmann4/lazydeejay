@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todor!</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+    <style>
+        body{
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color:yellow;
+        }
+
+        #player{
+            padding-top: 45px;
+            padding-left: 150px;
+            margin:0 auto;
+            display:block;
+        }
+
+        #playlist{
+            top:0;
+            left:0;
+            width:300px;
+            position: fixed;
+            padding-left:25px;
+            padding-top:50px;
+        }
+
+        #playlist li{ background-color:#000; color:#FFF; list-style: none;padding: 15px; margin-top:2px; }
+
+        #overlay{
+            background-color: #FFF;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            padding:50px;
+            text-align: center;
+            margin: 0 auto;
+            width: 500px;
+        }
+        #overlay img{max-width:400px;}
+
+        #overlay-wrapper{
+            position: fixed;
+            top: 0;left:0;bottom: 0;right:0;
+            padding-top:200px;
+        }
+
+        #username{
+            text-transform: uppercase;
+            color: pink;
+        }
+
+        .activetrack{
+            background-color:#c0c0c0!important;
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+
+<div id="player"></div>
+<div id="playlist"></div>
+
+<script>
+
+
+
+
+
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '780',
+            width: '1280',
+            videoId: 'e-ORhEE9VVg',
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+
+    var tracks =[];
+    var activeTrack = 0;
+    var lastplaylistlength = 0;
+
+    function polltracks(){
+        $.getJSON( "/track/all", function( data ) {
+            var items = [];
+            tracks = []
+            console.log(data);
+            $.each( data, function( key, val ) {
+                items.push( "<li id='" + key + "'>" + val["name"] + "</li>" );
+                tracks.push(val);
+            });
+
+            if (lastplaylistlength < data.length){
+                showOverlay();
+            }
+
+            lastplaylistlength = data.length
+            $("#playlist").html(items.join( "" ));
+            $("#"+activeTrack).addClass("activetrack");
+
+        });
+    }
+
+    $(function() {
+        // Handler for .ready() called.
+        $("#overlay>img").hide();
+        $("#overlay-wrapper").hide();
+    });
+
+    setInterval(function(){ polltracks(); }, 3000);
+
+    var timeout;
+    function showOverlay(){
+        $("#overlay-wrapper").show();
+        $("#overlay>img").hide();
+        rnd = getRandomIntInclusive(1,7);
+
+        activetrack = tracks[tracks.length-1];
+        $("#username").text(activetrack["username"])
+
+        $("#successimage"+rnd).show();
+        clearTimeout(timeout);
+        timeout = setTimeout(function(){ $("#overlay-wrapper").hide(); }, 3000);
+    }
+
+    function playNextTrack(){
+        activeTrack++;
+        track = tracks[activeTrack];
+        player.loadVideoById(track["video_id"]);
+        $("#playlist>li").removeClass("activetrack");
+        $("#"+activeTrack).addClass("activetrack");
+    }
+
+    function getRandomIntInclusive(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+        event.target.playVideo();
+    }
+
+
+    function onPlayerStateChange(event) {
+        console.log(event);
+        if (event.data == 0){
+
+            playNextTrack();
+        }
+        //}
+    }
+
+</script>
+
+<div id="overlay-wrapper">
+    <div id="overlay" >
+        <h1>THANK YOU <span id="username">USERNAME</span> FOR THIS SONG</h1>
+        <img id="successimage1" src="https://media.giphy.com/media/z9lZMI5UDdI08/giphy.gif">
+        <img id="successimage2" src="https://media.giphy.com/media/11W37uI72pjDkk/giphy.gif">
+        <img id="successimage3" src="https://66.media.tumblr.com/tumblr_lrdz2ae6961qhgpbqo1_500.gif">
+        <img id="successimage4" src="https://media.giphy.com/media/aUhEBE0T8XNHa/giphy.gif">
+        <img id="successimage5" src="http://i.imgur.com/ovy5dPv.gif">
+        <img id="successimage6" src="http://www.thedailycrate.com/wp-content/uploads/2014/01/Blog-DJ-Spinny.gif">
+        <img id="successimage7" src="http://24.media.tumblr.com/77927c3e8ecebf5b5799690db48ea196/tumblr_mqyxj66BZF1qfkjeho1_500.gif">
+
+
+    </div>
+</div>
+
+
+</body>
+</html>
