@@ -17,8 +17,7 @@ easy cheesy.
 
 ## Screenshots
 
-![Screenshot 1](https://raw.githubusercontent.com/davidmann4/lazydeejay/master/docs/screenshot_1.png)
-![Screenshot 2](https://raw.githubusercontent.com/davidmann4/lazydeejay/master/docs/screenshot_2.png)
+![Screenshot 1](http://i.imgur.com/SBqZ17F.png)
 
 ## Installation
 
