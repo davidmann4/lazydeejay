@@ -3,7 +3,7 @@
 This is a spaghetti code bot that we did in [Vienna's first bot hackathon](http://botshackathon.com/) ! 
 ( [FB Event](https://www.facebook.com/events/706934266114109/?active_tab=posts) )
 
-Lazy deejays won first prize and we wanted to share the code that made it all possible. Since we had to hack this up in a single day there's no QA or testing 
+[Lazy deejays](https://www.facebook.com/lazydeejays/) won first prize and we wanted to share the code that made it all possible. Since we had to hack this up in a single day there's no QA or testing 
 
 ## WTF is lazy deejays? 
 ![Screenshot 3](http://i.imgur.com/RlD5q7Y.png)
