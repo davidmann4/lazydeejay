@@ -8,7 +8,8 @@
     <style>
         body{
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color:yellow;
+            background-color:#e3ff15;
+            margin:0px;
         }
 
         #player{
@@ -24,7 +25,7 @@
             width:300px;
             position: fixed;
             padding-left:25px;
-            padding-top:50px;
+            padding-top:130px;
         }
 
         #playlist li{ background-color:#000; color:#FFF; list-style: none;padding: 15px; margin-top:2px; }
@@ -53,16 +54,19 @@
         }
 
         .activetrack{
-            background-color:#c0c0c0!important;
+            background-color:#000!important;
         }
 
+        .header{background-color:#000;}
+        .header img{width:150px;margin-left:50px;}
     </style>
 
 
 </head>
 <body>
-
-
+<div class="header">
+	<img src="logo.png">
+</div>
 <div id="player"></div>
 <div id="playlist"></div>
 
@@ -105,7 +109,9 @@
             tracks = []
             console.log(data);
             $.each( data, function( key, val ) {
-                items.push( "<li id='" + key + "'>" + val["name"] + "</li>" );
+            	if(key >= activeTrack){
+                	items.push( "<li id='" + key + "'>" + val["name"] + "</li>" );
+                }
                 tracks.push(val);
             });
 
@@ -124,6 +130,7 @@
         // Handler for .ready() called.
         $("#overlay>img").hide();
         $("#overlay-wrapper").hide();
+        $("#playlist").click(playNextTrack);
     });
 
     setInterval(function(){ polltracks(); }, 3000);
