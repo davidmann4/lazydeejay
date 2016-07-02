@@ -21,6 +21,9 @@ easy cheesy.
 
 ## Installation
 
+If you test the bot on localhost you need a tunnel. You can use ngrok (simplest solution) or use your own server e.g. `ssh -R 80:localhost:3000 user@example.com`
+With ngrok you'll have a nice https tunnel that you can use to setup the webhook in messenger.
+
 1. clone the repo
 
 2. Install redis & libsqlite3-dev: `sudo apt-get install redis-server libsqlite3-dev`
