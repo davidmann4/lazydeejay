@@ -1,6 +1,6 @@
 # Facebook::Messenger.config.access_token = ''
-# #Facebook::Messenger.config.app_secret = 'ab7675a028394c0b225ecc2b158e57b5'
-# Facebook::Messenger.config.verify_token = 'this_is_a_verify_token_lalala_123_i_am_fancy'
+# #Facebook::Messenger.config.app_secret = ''
+# Facebook::Messenger.config.verify_token = ''
 #
 # Facebook::Messenger::Subscriptions.subscribe
 #
